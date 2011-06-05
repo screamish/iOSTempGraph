@@ -11,12 +11,14 @@
 
 @interface WeatherStation : NSObject {
 	NSMutableData *receivedData;
-	BOOL dataFinishedDownloading;
 	NSData *rawData;
+	
+	id updateDelegate;
+	SEL updateDelegateCallback;
 }
 
 @property (retain) NSData *rawData;
 
-- (void)fetchTheData;
+- (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback;
 
 @end

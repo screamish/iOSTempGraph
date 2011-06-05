@@ -17,6 +17,7 @@
 @property (retain) IBOutlet UILabel *display;
 
 - (IBAction)showRawTempData;
+- (void)updateDisplay;
 
 @end
 

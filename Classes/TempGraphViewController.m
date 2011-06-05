@@ -31,14 +31,16 @@
 
 }
 
+- (void)updateDisplay
+{
+	self.display.text = [[NSString alloc] initWithData:weatherStation.rawData encoding:NSUTF8StringEncoding];
+}
+
 - (IBAction)showRawTempData
 {
-	[self.weatherStation fetchTheData];
-	
-	while (YES) {
-		self.display.text = [[NSString alloc] initWithData:weatherStation.rawData];
-	}
+	[self.weatherStation fetchTheDataWithDelegate:self callback:@selector(updateDisplay)];
 }
+
 
 /*
 // Override to allow orientations other than the default portrait orientation.

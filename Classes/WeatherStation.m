@@ -13,8 +13,12 @@
 
 @synthesize rawData;
 
-- (void)fetchTheData
+- (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback
 {
+	// Set the delegate and callback for passing back the data
+	updateDelegate = [delegate retain];
+	updateDelegateCallback = callback;
+	
 	// Create the request.
 	NSURL *melbourneJSONData = [NSURL URLWithString:@"http://www.bom.gov.au/fwo/IDV60901/IDV60901.94868.json"];
 	
@@ -74,9 +78,14 @@
 	
 	self.rawData = [[NSData alloc] initWithData:receivedData];
 	
+	[updateDelegate performSelector:updateDelegateCallback];
+	
     // release the connection, and the data object
     [connection release];
     [receivedData release];
+	
+	// release the update delegate
+	[updateDelegate release];
 }
 
 
