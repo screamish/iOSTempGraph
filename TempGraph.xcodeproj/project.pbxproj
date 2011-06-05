@@ -26,6 +26,7 @@
 		F49A19B9139A0AC400A5041E /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = F49A19AD139A0AC400A5041E /* CJSONScanner.m */; };
 		F49A19BA139A0AC400A5041E /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = F49A19AF139A0AC400A5041E /* CJSONSerializer.m */; };
 		F49A19BE139A0BA500A5041E /* WeatherStation.m in Sources */ = {isa = PBXBuildFile; fileRef = F49A19BD139A0BA500A5041E /* WeatherStation.m */; };
+		F49A1A47139B7FF900A5041E /* IDV6090194868.jsn in Resources */ = {isa = PBXBuildFile; fileRef = F49A1A46139B7FF900A5041E /* IDV6090194868.jsn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		F49A19B0139A0AC400A5041E /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
 		F49A19BC139A0BA500A5041E /* WeatherStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeatherStation.h; sourceTree = "<group>"; };
 		F49A19BD139A0BA500A5041E /* WeatherStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeatherStation.m; sourceTree = "<group>"; };
+		F49A1A46139B7FF900A5041E /* IDV6090194868.jsn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = IDV6090194868.jsn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F49A1A46139B7FF900A5041E /* IDV6090194868.jsn */,
 				2899E5210DE3E06400AC0155 /* TempGraphViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* TempGraph-Info.plist */,
@@ -247,6 +250,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* TempGraphViewController.xib in Resources */,
+				F49A1A47139B7FF900A5041E /* IDV6090194868.jsn in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

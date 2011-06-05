@@ -13,14 +13,18 @@
 
 @synthesize rawData;
 
-- (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback
+
+- (NSData *)mockData
 {
-	// Set the delegate and callback for passing back the data
-	updateDelegate = [delegate retain];
-	updateDelegateCallback = callback;
-	
+	if (!mockData) {
+		mockData = [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"IDV6090194868" ofType:@"jsn"]];
+	}
+	return mockData;
+}
+
+- (void) beginFetchFromBOM {
 	// Create the request.
-	NSURL *melbourneJSONData = [NSURL URLWithString:@"http://www.bom.gov.au/fwo/IDV60901/IDV60901.94868.json"];
+	  NSURL *melbourneJSONData = [NSURL URLWithString:@"http://www.bom.gov.au/fwo/IDV60901/IDV60901.94868.json"];
 	
 	NSURLRequest *theRequest=[NSURLRequest requestWithURL:melbourneJSONData
 											  cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -35,6 +39,24 @@
 	} else {
 		// Inform the user that the connection failed.
 	}
+
+}
+- (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback
+{
+	// Set the delegate and callback for passing back the data
+	updateDelegate = [delegate retain];
+	updateDelegateCallback = callback;
+	
+	// Uncomment the below to fetch the fresh data, but for now we use the mock data
+	//[self beginFetchFromBOM];
+	
+	// TODO remove the below when we no longer need the fake
+	self.rawData = [[NSData alloc] initWithData:self.mockData];
+	
+	[updateDelegate performSelector:updateDelegateCallback];
+	
+	// release the update delegate
+	[updateDelegate release];	
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response

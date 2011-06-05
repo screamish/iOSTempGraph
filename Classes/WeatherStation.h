@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CJSONDeserializer.h"
 
 
 @interface WeatherStation : NSObject {
 	NSMutableData *receivedData;
 	NSData *rawData;
+	
+	NSData *mockData;
 	
 	id updateDelegate;
 	SEL updateDelegateCallback;
