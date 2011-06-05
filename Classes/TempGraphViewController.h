@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeatherStation.h"
 
 @interface TempGraphViewController : UIViewController {
-
+	WeatherStation *weatherStation;
+	IBOutlet UILabel *display;
 }
+
+@property (retain) IBOutlet UILabel *display;
+
+- (IBAction)showRawTempData;
 
 @end
 
