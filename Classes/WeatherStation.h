@@ -16,11 +16,19 @@
 	
 	NSData *mockData;
 	
+	NSDictionary *parsedData;
+	
+	NSArray *temperatures;
+	NSArray *timestamps;
+	
 	id updateDelegate;
 	SEL updateDelegateCallback;
 }
 
 @property (retain) NSData *rawData;
+@property (retain) NSDictionary *parsedData;
+@property (retain) NSArray *temperatures;
+@property (retain) NSArray *timestamps;
 
 - (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback;
 

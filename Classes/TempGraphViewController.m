@@ -15,7 +15,58 @@
 @implementation TempGraphViewController
 
 @synthesize weatherStation;
-@synthesize display;
+@synthesize table;
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return [self.weatherStation.temperatures count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *SimpleTableIdentifier = @"SimpleTableIdentifier";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SimpleTableIdentifier];
+	if (nil == cell) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+									   reuseIdentifier:SimpleTableIdentifier] autorelease];
+	}
+	
+	NSUInteger row = [indexPath row];
+	
+	if (nil != [self.weatherStation.temperatures objectAtIndex:row])
+	{
+		//TODO put this back when I work out how to parse the date data we have
+		//TODO move this all out of here and into the WeatherStation, this is NASTY
+		/*
+		NSTimeInterval timeInterval;
+		NSNumberFormatter *numFormatter = [[NSNumberFormatter alloc] init];
+		[numFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+		
+		timeInterval = [[numFormatter numberFromString:[self.weatherStation.timestamps objectAtIndex:row]] doubleValue];
+		
+		NSDate *tempDate = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		
+		NSString *timeAsText = [dateFormatter stringFromDate:tempDate];
+		*/
+		
+		NSString *timeAsText = [self.weatherStation.timestamps objectAtIndex:row];
+		
+		cell.textLabel.text = [timeAsText stringByAppendingFormat:@" %@ Celcius", [self.weatherStation.temperatures objectAtIndex:row]];
+		//cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.weatherStation.temperatures objectAtIndex:row]];
+		
+		//[numFormatter release];
+		//[tempDate release];
+		//[dateFormatter release];
+	}
+	else {
+		cell.textLabel.text = @"Empty";
+	}
+
+	
+	return cell;
+}
 
 - (WeatherStation *)weatherStation
 {
@@ -33,7 +84,8 @@
 
 - (void)updateDisplay
 {
-	self.display.text = [[NSString alloc] initWithData:weatherStation.rawData encoding:NSUTF8StringEncoding];
+	// self.display.text = [[NSString alloc] initWithData:weatherStation.rawData encoding:NSUTF8StringEncoding];
+	[self.table reloadData];
 }
 
 - (IBAction)showRawTempData
@@ -60,7 +112,7 @@
 - (void)releaseOutlets
 {
 	self.weatherStation = nil;
-	self.display = nil;
+	self.table = nil;
 }
 
 - (void)viewDidUnload {

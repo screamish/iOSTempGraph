@@ -12,6 +12,9 @@
 @implementation WeatherStation
 
 @synthesize rawData;
+@synthesize parsedData;
+
+@synthesize temperatures, timestamps;
 
 
 - (NSData *)mockData
@@ -24,7 +27,7 @@
 
 - (void) beginFetchFromBOM {
 	// Create the request.
-	  NSURL *melbourneJSONData = [NSURL URLWithString:@"http://www.bom.gov.au/fwo/IDV60901/IDV60901.94868.json"];
+	NSURL *melbourneJSONData = [NSURL URLWithString:@"http://www.bom.gov.au/fwo/IDV60901/IDV60901.94868.json"];
 	
 	NSURLRequest *theRequest=[NSURLRequest requestWithURL:melbourneJSONData
 											  cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -41,6 +44,25 @@
 	}
 
 }
+
+- (NSDictionary *)parseJSONData:(NSData *)jsonData
+{
+	NSDictionary *theJSONData = nil;
+	NSError *theError = nil;
+	id theObject = [[CJSONDeserializer deserializer] deserialize:jsonData error:&theError];
+	
+	if ([theObject isKindOfClass:[NSDictionary class]]) {
+		theJSONData = theObject;
+		NSDictionary *observations = [theJSONData objectForKey:@"observations"];
+		NSDictionary *innerData = [observations objectForKey:@"data"];
+		self.temperatures = [innerData objectForKey:@"air_temp"];
+		//self.timestamps = [innerData objectForKey:@"local_date_time_full"];
+		self.timestamps = [innerData objectForKey:@"local_date_time"];
+	}
+	
+	return theJSONData;
+}
+
 - (void)fetchTheDataWithDelegate:(id)delegate callback:(SEL)callback
 {
 	// Set the delegate and callback for passing back the data
@@ -52,6 +74,8 @@
 	
 	// TODO remove the below when we no longer need the fake
 	self.rawData = [[NSData alloc] initWithData:self.mockData];
+	
+	self.parsedData = [self parseJSONData:self.rawData];
 	
 	[updateDelegate performSelector:updateDelegateCallback];
 	
